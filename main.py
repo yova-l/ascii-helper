@@ -1,6 +1,6 @@
 import sys
 from asciih import show_welcome
-from commands import first_process_command
+from commands import first_process_command, copy_char
 
 # Armar un requirements...
 # https://pypi.org/project/pyperclip/
@@ -17,10 +17,14 @@ def main():
         print("Waiting for any of the options listed above...")
     
     if len(commands) != 0:
-        first_process_command(commands.join(" "))
+        first_process_command(" ".join(commands))
 
     for line in sys.stdin: 
-        first_process_command(line.rstrip())
+        table = first_process_command(line.rstrip())
+        if table != None:
+            code = input("Your code...")
+            copy_char(table, code)
+
 
 main()
 

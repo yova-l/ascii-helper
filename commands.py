@@ -21,7 +21,7 @@ def reset_favs():
         f.write('keyword,saved')
     print(RESETTED)
 
-def process_valid_command(command, tables_dict) -> dict:
+def process_valid_table(command, tables_dict) -> dict:
     table = get_table(command, tables_dict)
     print_table(table)
     return table
@@ -42,7 +42,7 @@ def first_process_command(inp):
             return
 
         if command in tables_dict:
-            return process_valid_command(command, tables_dict)
+            return process_valid_table(command, tables_dict)
     
         print("Not a valid command...")
          

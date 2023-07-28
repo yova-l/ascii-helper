@@ -14,7 +14,7 @@ def show_welcome():
         an specific character if you remember the corresponding combination ****
               
         This program will copy to your system clipboard the character 
-        you want, so you don't have to google it or enter weird combinations
+        you want, so you don't have to search it or enter weird combinations
         anymore.
 
         ------ FROM HERE YOU CAN USE THE NEXT COMMANDS: -----------------------
@@ -22,7 +22,7 @@ def show_welcome():
         |      * 'prog': print a list of the most frecuent characters used    |
         |        in programming i.e: $,%,!,|... .                             |
         |      * 'favs': print a list of your saved favourites.               |
-        |      * 'spa': print a list of the special character in spanish.     |
+        |      * 'spa': print a list of the special characters in spanish.    |
         |      * 'save <anything> <keyword>': it will save anything in your   |
         |        favourites.                                                  |
         |      * 'favs reset': it will reset your favourites.                 | 

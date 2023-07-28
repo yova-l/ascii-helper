@@ -6,13 +6,12 @@ DOUBLE_QUOTES = '"'
 BACK = 'back'
 
 def get_char(table):
-    """PRE: the table exits, the users wants a char"""
     if table == None:
         return
-    code = input("  Press the desired code OR 'back' to enter another command\n")
+    code = input("---- Press the desired code OR 'back' to enter another command\n")
     while code != BACK:
         copy_char(table, code)
-        code = input("  Press the desired code OR 'back' to enter another command\n") 
+        code = input("---- Press the desired code OR 'back' to enter another command\n") 
 
 def copy_char(table, key):
     if not key in table:

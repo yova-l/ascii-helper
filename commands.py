@@ -1,92 +1,85 @@
 import sys
-import pyperclip 
-import csv
-# pip3 install pyperclip
-"""
-    pyperclip.copy('Tbanana')
-    res = pyperclip.paste()
-    print("La pegada es: ", res)
+from tables import copy_char, get_table, print_table, get_dict_of
+from ascii_buttons import SAVED, RESETTED
 
-    emojis;emo
-    programming;prog
-    special;spe
-    favourites;fav
-    spanish;spa
-
-"""
 QUIT = "q"
-DOUBLE_QUOTES = '"'
+SAVE = "save"
+FAVOURITES = "favs"
+RESET = "reset"
+TABLES_PATH = "./data/tables.csv"
+FAVOURITES_PATH = "./data/favourites.csv"
+CSV_DELIMITER = ","
 
-def is_favourite(inp):
-    favs = ["a","b","c","d","e","f","g","h"]
-    return inp in favs
+def save(key, str_to_save):
+    with open(FAVOURITES_PATH, 'a') as f:
+        f.write('\n')
+        f.write(f'{key},{str_to_save}')
+    print(SAVED)
 
-def copy_char(table, key):
-    if not key in table:
-        print("Not a valid key...")
-        return
+def reset_favs():
+    with open(FAVOURITES_PATH, 'w') as f:
+        f.write('keyword,saved')
+    print(RESETTED)
 
-    res = table[key]
-    pyperclip.copy(res)
-    print("Copied!")
-
-def process_valid_command(command, commands_dict) -> dict:
-    if command == QUIT:
-        sys.exit()
-    table = get_table(command, commands_dict)
+def process_valid_command(command, tables_dict) -> dict:
+    table = get_table(command, tables_dict)
     print_table(table)
     return table
 
-def get_table(key, command_dict) -> dict:
-    table = {}
-    path = command_dict[key]
-    with open(path) as f:
-        for keyword, char in csv.reader(f,delimiter='0'):
-            if DOUBLE_QUOTES in char: # RARISIMA ATAJADA MEJORAR
-                char = char.strip("'")
-            table[keyword] = char
-    return table
-
-def print_table(table):
-    for keyword, char in table.items():
-        print(f"    {keyword} = {char}")
-
-def process_complex_command(param1, param2):
-    copy_char(param1, param2)
-
-def get_dict_of_commands(path):
-    commands = {}
-    with open(path) as f:
-        for path_name, command in csv.reader(f):
-            commands[command] = path_name
-    return commands
-
 def first_process_command(inp):
-    """
-    A valid [command] must have lenght one or two. In the first case a second process_command will occur,
-    if the case is the other one the desired char is going to be copied, or the action will occur.
-    """ 
     param_list = inp.split()
-    commands_dict = get_dict_of_commands("commands.csv")
+    tables_dict = get_dict_of(TABLES_PATH)
+    favourites = get_dict_of(FAVOURITES_PATH)
 
-    # Wants to print an specific table or quit
     if len(param_list) == 1:
         command = param_list[0]
 
-        #pendiente
-        if is_favourite(command):
-            copy_char({}, command)
+        if command == QUIT:
+            sys.exit()
+
+        if command in favourites:
+            copy_char(favourites, command)
             return
 
-        if command in commands_dict:
-            return process_valid_command(command, commands_dict)
+        if command in tables_dict:
+            return process_valid_command(command, tables_dict)
     
-        print("\nNot a valid command...")
+        print("Not a valid command...")
          
-    elif len(param_list) == 2: #pendiente
-        process_complex_command(param_list[0], param_list[1])
+    elif len(param_list) == 2: 
+        command = param_list[0]
+        keyword = param_list[1]
+
+        if command == FAVOURITES and keyword == RESET:
+            reset_favs()
+            return
+      
+        if not command in tables_dict:
+            print("\nNot a valid command...\n")
+            return
+        
+        copy_char(get_table(command, tables_dict), keyword)
+
+    elif len(param_list) == 3: 
+        command = param_list[0]
+        new_fav = param_list[1]
+        keyword = param_list[2]
+
+        if command != SAVE:
+            print("\nNot a valid command...\n")
+            return
+        
+        if keyword in favourites and new_fav == favourites[keyword]:
+            print(SAVED)
+            return
+        
+        if CSV_DELIMITER in new_fav:
+            new_fav = f'"{new_fav}"'
+        
+        if CSV_DELIMITER in keyword:
+            keyword = f'"{keyword}"'
+
+        save(keyword, new_fav)
 
     else:
-        print("1 or 2 parameters were expected...")
-    
-
+        print("1 or 2 parameters were expected...\n")

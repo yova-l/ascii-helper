@@ -1,0 +1,4 @@
+command,path
+prog,./data/programming.csv
+favs,./data/favourites.csv
+spa,./data/spanish.csv

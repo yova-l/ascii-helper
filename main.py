@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import sys
 from welcome import show_welcome
 from commands import first_process_command

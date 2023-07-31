@@ -1,4 +1,4 @@
 command,path
-prog,./data/programming.csv
-favs,./data/favourites.csv
-spa,./data/spanish.csv
+prog,/usr/bin/ascii-helper/data/programming.csv
+favs,/usr/bin/ascii-helper/data/favourites.csv
+spa,/usr/bin/ascii-helper/data/spanish.csv

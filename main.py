@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-#!pip3 install pyperclip
 import sys
 from welcome import show_welcome
 from commands import first_process_command
@@ -14,6 +12,8 @@ def main():
     
     if len(commands) != 0:
         table = first_process_command(" ".join(commands))
+        if len(commands) > 1:
+            sys.exit()
         get_char(table)
 
     print("Please enter a valid command...")

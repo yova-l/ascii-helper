@@ -6,8 +6,8 @@ QUIT = "q"
 SAVE = "save"
 FAVOURITES = "favs"
 RESET = "reset"
-TABLES_PATH = "./data/tables.csv"
-FAVOURITES_PATH = "./data/favourites.csv"
+TABLES_PATH = "/usr/bin/ascii-helper/data/tables.csv"
+FAVOURITES_PATH = "/usr/bin/ascii-helper/data/favourites.csv"
 CSV_DELIMITER = ","
 
 def save(key, str_to_save):
@@ -39,7 +39,7 @@ def first_process_command(inp):
 
         if command in favourites:
             copy_char(favourites, command)
-            return
+            sys.exit()
 
         if command in tables_dict:
             return process_valid_table(command, tables_dict)
